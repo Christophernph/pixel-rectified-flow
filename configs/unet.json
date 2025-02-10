@@ -1,0 +1,68 @@
+{
+  "type": "supervised",
+  "project": "rf-rooms",
+  "checkpoint_mode": "min",
+  "checkpoint_metric": "MSE",
+  "checkpoint_n_saved": 3,
+  "log_interval": "epoch_completed",
+  "amp": false,
+  "batch_size": 128,
+  "loader_workers": 0,
+  "max_epochs": 100,
+  "clip_grad_norm": 1.0,
+  "gradient_accumulation_steps": 1,
+  "datasets": {
+    "train": {
+      "class_name": "datasets.rooms.Rooms",
+      "params": {
+        "dataframe_path": ["data/interior/ps-straighten-ok-train-interior.csv", "data/interior/ps-straighten-ok-august-2024-interior.csv"],
+        "max_edge": 128,
+        "augment": false,
+        "normalize": false
+      }
+    },
+    "val": {
+      "class_name": "datasets.rooms.Rooms",
+      "params": {
+        "dataframe_path": "data/interior/ps-straighten-ok-val-interior.csv",
+        "max_edge": 128,
+        "augment": false,
+        "normalize": false,
+        "seed": 42
+      }
+    }
+  },
+  "loaders": {},
+  "model": {
+    "class_name": "models.unet.Unet",
+    "params": {
+      "dim": 32
+    }
+  },
+  "losses": {
+    "MSE": {
+      "class_name": "torch.nn.MSELoss",
+      "params": {},
+      "weight": 1.0
+    }
+  },
+  "metrics": {
+    "MSE": {
+      "class_name": "ignite.metrics.MeanSquaredError",
+      "params": {}
+    }
+  },
+  "optimizer": {
+    "class_name": "torch.optim.AdamW",
+    "params": {}
+  },
+  "lr_scheduler": {
+    "type": "cosine",
+    "start_value": 1e-4,
+    "end_value": 1e-7,
+    "cycles": 1,
+    "start_value_mult": 1.0,
+    "end_value_mult": 1.0,
+    "warmup_steps": 100
+  }
+}
