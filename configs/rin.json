@@ -4,10 +4,10 @@
   "project": "rf-rooms",
   "checkpoint_mode": "min",
   "checkpoint_metric": "MSE",
-  "checkpoint_n_saved": 3,
+  "checkpoint_n_saved": 1,
   "log_interval": "epoch_completed",
   "amp": false,
-  "batch_size": 32,
+  "batch_size": 24,
   "loader_workers": 0,
   "max_epochs": 1000,
   "clip_grad_norm": 1.0,
@@ -19,7 +19,8 @@
         "dataframe_path": ["data/interior/ps-straighten-ok-train-interior.csv", "data/interior/ps-straighten-ok-august-2024-interior.csv"],
         "max_edge": 128,
         "augment": false,
-        "normalize": false
+        "normalize": false,
+        "n": -1
       }
     },
     "val": {
@@ -35,7 +36,7 @@
   },
   "loaders": {},
   "model": {
-    "class_name": "models.rin_v2.RIN",
+    "class_name": "models.rin.RIN",
     "params": {
       "patch_size": 4,
       "num_latents": 128,
@@ -45,7 +46,9 @@
       "num_blocks": 6,
       "num_layers_per_block": 4,
       "num_heads": 16,
-      "expansion": 4
+      "expansion": 4,
+      "conv": true,
+      "global_skip": true
     }
   },
   "losses": {

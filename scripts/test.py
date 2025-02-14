@@ -8,7 +8,7 @@ from torchdiffeq import odeint
 from datasets.rooms import Rooms
 from utils.save import save_image
 
-CKPT_PATH = "checkpoints/dauntless-silence-2/checkpoint_52_MSE=-1413.7056.pt"
+CKPT_PATH = ""
 DEVICE = "cuda:0"
 MAX_EDGE = None # None for training resolution
 STEPS = 16

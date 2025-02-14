@@ -20,13 +20,17 @@ class Rooms(Dataset):
                  normalize: bool = False,
                  mean: Sequence[float] = (0.5, 0.5, 0.5),
                  std: Sequence[float] = (0.5, 0.5, 0.5),
-                 seed: int = None
+                 seed: int = None,
+                 n: int = -1
                  ):
         super().__init__()
         if isinstance(dataframe_path, str):
             self.dataframe = pd.read_csv(dataframe_path)
         else:
             self.dataframe = pd.concat([pd.read_csv(path) for path in dataframe_path])
+        
+        if n > 0:
+            self.dataframe = self.dataframe.sample(n)
 
         self.max_edge = max_edge
         self.augment = augment

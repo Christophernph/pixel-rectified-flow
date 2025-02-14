@@ -6,8 +6,8 @@ from torchdiffeq import odeint
 from datasets.rooms import Rooms
 from utils.save import save_image
 
-CKPT_PATH = "checkpoints/worldly-vortex-5/checkpoint_2_MSE=-3174.6000.pt"
-DEVICE = "cuda:0"
+CKPT_PATH = ""
+DEVICE = "cuda:2"
 MAX_EDGE = None # None for training resolution
 STEPS = 16
 N_SAMPLES = 10
@@ -23,17 +23,6 @@ def main():
     device = torch.device(DEVICE)
     model, config = load_model_checkpoint(CKPT_PATH)
     model = model.eval().to(device)
-    
-    # with torch.no_grad():
-    #     norms = []
-    #     names = []
-    #     for name, param in model.named_parameters():
-    #         norms.append(torch.norm(param).item())
-    #         names.append(name)
-    #     indices = torch.argsort(torch.tensor(norms))
-    #     for idx in indices:
-    #         print(f"{names[idx]}: {norms[idx]:.2f}")
-    # exit()
     
     num_latents = config.model.params['num_latents']
     latent_dim = config.model.params['latent_dim']
